@@ -27,7 +27,7 @@ User.create = function *(user) {
  */
 
 function newUser(user) {
-  let hash = bcrypt.hashSync((user.password || 'password').trim(), bcrypt.genSaltSync(10));
+  const hash = bcrypt.hashSync((user.password || 'password').trim(), bcrypt.genSaltSync(10));
   return {
     name: user.name || '',
     gif: user.gif || '',
