@@ -29,7 +29,6 @@ app.use(serve('client-react/static'));
 
 app.use(parser());
 
-console.log(process.env);
 var secret = constants.SECRET;
 
 /**
