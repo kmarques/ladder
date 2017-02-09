@@ -30,7 +30,7 @@ run: node_modules
 
 # Run the server with nodemon for development.
 server: node_modules
-	@ JWT_TOKEN=mysecret $(nodemon) --watch server --watch server server/server --development
+	@$(nodemon) --watch server --watch server server/server --development
 
 # Build client.
 build: node_modules
