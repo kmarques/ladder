@@ -55,7 +55,8 @@ var newGame = exports.newGame = function newGame(payload) {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
     },
     body: (0, _stringify2.default)(payload)
   }).then(function (response) {
