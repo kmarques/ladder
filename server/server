@@ -10,6 +10,7 @@ const serve = require('koa-static');
 const route = require('koa-route');
 const jwt = require('koa-jwt');
 const koa = require('koa');
+const constants = require('./lib/constants');
 
 /**
  * Expose `app`.
@@ -28,7 +29,8 @@ app.use(serve('client-react/static'));
 
 app.use(parser());
 
-const secret = process.env.JWT_TOKEN;
+console.log(process.env);
+var secret = constants.SECRET;
 
 /**
  * Configure routes.

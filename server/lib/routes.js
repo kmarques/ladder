@@ -6,6 +6,7 @@ const render = require('./render');
 const User = require('./user');
 const Game = require('./game');
 const rank = require('./elo');
+const constants = require('./constants');
 const jsonwebtoken = require('jsonwebtoken');
 const bcrypt = require('bcrypt-nodejs');
 
@@ -30,7 +31,7 @@ exports.connect = function *() {
         games: user.games,
         rating: user.rating
       },
-      process.env.JWT_TOKEN,
+      constants.SECRET,
       {
         expiresIn: '1d'
       }
@@ -65,7 +66,7 @@ exports.checktoken = function *() {
       games: user.games,
       rating: user.rating
     },
-    process.env.JWT_TOKEN,
+    constants.SECRET,
     {
       expiresIn: '1d'
     }
