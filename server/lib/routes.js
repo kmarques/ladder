@@ -37,7 +37,7 @@ exports.connect = function *() {
       }
     );
 
-    return this.body = {token}
+    return this.body = {token: token}
   }
   return this.throw('Unknown user', 403);
 };
@@ -72,7 +72,7 @@ exports.checktoken = function *() {
     }
   );
 
-  return this.body = {token};
+  return this.body = {token: token};
 };
 
 /**
