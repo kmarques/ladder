@@ -2,10 +2,12 @@
  * Module dependencies.
  */
 
-var render = require('./render');
-var User = require('./user');
-var Game = require('./game');
-var rank = require('./elo');
+const render = require('./render');
+const User = require('./user');
+const Game = require('./game');
+const rank = require('./elo');
+const jsonwebtoken = require('jsonwebtoken');
+const bcrypt = require('bcrypt-nodejs');
 
 /**
  * Render index html page.
@@ -16,13 +18,60 @@ exports.index = function *() {
 };
 
 exports.connect = function *() {
-  var load = this.request.body,
-    user = yield User.findOne({name: load.username, password: load.password});
+  const load = this.request.body,
+    user = yield User.findOne({name: new RegExp('^' + load.username + '$', 'i')});
 
-  if (user) {
-    return this.body = {logged: true, admin: user.admin, name: user.name}
+  if (user && bcrypt.compareSync(load.password, user.password)) {
+    const token = jsonwebtoken.sign(
+      {
+        uid: user._id,
+        admin: user.admin,
+        name: user.name,
+        games: user.games,
+        rating: user.rating
+      },
+      process.env.JWT_TOKEN,
+      {
+        expiresIn: '1d'
+      }
+    );
+
+    return this.body = {token}
   }
   return this.throw('Unknown user', 403);
+};
+
+exports.checktoken = function *() {
+  let load = this.request.body;
+
+  if (!load.token) {
+    return this.throw('No token present', 401);
+  }
+
+  try {
+    jsonwebtoken.verify(load.token, process.env.JWT_TOKEN);
+  } catch (err) {
+    return this.throw('Invalid token', 403);
+  }
+
+  tokenData = jsonwebtoken.decode(load.token, process.env.JWT_TOKEN);
+  let user = yield User.findOne({"_id": tokenData.uid});
+
+  const token = jsonwebtoken.sign(
+    {
+      uid: user._id,
+      admin: user.admin,
+      name: user.name,
+      games: user.games,
+      rating: user.rating
+    },
+    process.env.JWT_TOKEN,
+    {
+      expiresIn: '1d'
+    }
+  );
+
+  return this.body = {token};
 };
 
 /**
@@ -95,13 +144,10 @@ exports.game = {
     var res = yield Game.delete(id);
 
     if (res instanceof TypeError) {
-      console.log('throw 400');
       return this.throw(res.message, 400);
     } else if (res instanceof URIError) {
-      console.log('throw 404');
       return this.throw(res.message, 404);
     }
-    console.log('game removed');
     return this.body = null;
   }
 };

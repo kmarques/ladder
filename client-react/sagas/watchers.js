@@ -3,30 +3,34 @@
  */
 'use strict';
 
-import { takeLatest } from 'redux-saga';
-import { fetchUsersSaga, newUserSaga } from './userSaga';
-import { fetchGamesSaga, newGameSaga } from './gameSaga';
-import { connectSaga, logoutSaga } from './profileSaga';
+import {takeLatest} from 'redux-saga';
+import {fetchUsersSaga, newUserSaga} from './userSaga';
+import {fetchGamesSaga, newGameSaga} from './gameSaga';
+import {connectSaga, logoutSaga, refreshTokenSaga} from './profileSaga';
 import * as types from '../constants/actionTypes';
 
-exports.watchFetchUsers = function* () {
+exports.watchFetchUsers = function*() {
   yield* takeLatest(types.FETCH_USERS_REQUEST, fetchUsersSaga);
 };
-exports.watchNewUser = function* () {
+exports.watchNewUser = function*() {
   yield* takeLatest(types.NEW_USER_REQUEST, newUserSaga);
 };
 
-exports.watchFetchGames = function* () {
+exports.watchFetchGames = function*() {
   yield* takeLatest(types.FETCH_GAMES_REQUEST, fetchGamesSaga);
 };
-exports.watchNewGame = function* () {
+exports.watchNewGame = function*() {
   yield* takeLatest(types.NEW_GAME_REQUEST, newGameSaga);
 };
 
-exports.watchConnect = function* () {
+exports.watchConnect = function*() {
   yield* takeLatest(types.PROFILE_CONNECT_REQUEST, connectSaga);
 };
 
-exports.watchLogout = function* () {
+exports.watchRefreshToken = function*() {
+  yield* takeLatest(types.PROFILE_REFRESH_REQUEST, refreshTokenSaga);
+};
+
+exports.watchLogout = function*() {
   yield* takeLatest(types.PROFILE_LOGOUT_REQUEST, logoutSaga);
 };

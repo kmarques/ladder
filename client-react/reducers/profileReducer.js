@@ -11,7 +11,7 @@ export default function (state = init.profile, action) {
   let profile = action.profile;
   switch (action.type) {
     case types.PROFILE_CONNECT_SUCCESS:
-      return {...state, ...profile};
+      return {...state, ...profile, logged: true};
     case types.PROFILE_LOGOUT_SUCCESS:
       return {...state, ...profile};
     default:
