@@ -17,9 +17,9 @@ import {Link, IndexLink} from 'react-router';
 import AdminAction from './AdminAction';
 import Header from '../common/Header';
 import LoginForm from './LoginForm';
-import { drawerToggleAction } from '../actions/uiActions';
-import { fetchUsersAction } from '../actions/userActions';
-
+import {drawerToggleAction} from '../actions/uiActions';
+import {fetchUsersAction} from '../actions/userActions';
+import {refreshTokenAction} from '../actions/profileActions';
 
 
 const muiTheme = getMuiTheme({
@@ -34,6 +34,11 @@ export class Layout extends React.Component {
 
     // This binding is necessary to make `this` work in the callback
     this.handleToggle = this.handleToggle.bind(this);
+
+    let token = localStorage.getItem('token');
+    if (token) {
+      this.props.dispatch(refreshTokenAction({token: token}));
+    }
   }
 
   handleToggle() {

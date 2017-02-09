@@ -4,11 +4,12 @@
  * Module dependencies.
  */
 
-var parser = require('koa-bodyparser');
-var PORT = process.env.PORT || 3000;
-var serve = require('koa-static');
-var route = require('koa-route');
-var koa = require('koa');
+const parser = require('koa-bodyparser');
+const PORT = process.env.PORT || 3000;
+const serve = require('koa-static');
+const route = require('koa-route');
+const jwt = require('koa-jwt');
+const koa = require('koa');
 
 /**
  * Expose `app`.
@@ -27,6 +28,8 @@ app.use(serve('client-react/static'));
 
 app.use(parser());
 
+const secret = process.env.JWT_TOKEN;
+
 /**
  * Configure routes.
  */
@@ -35,13 +38,19 @@ var routes = require('./lib/routes.js');
 app.use(route.get('/', routes.index));
 app.use(route.get('/game', routes.index));
 app.use(route.post('/connect', routes.connect, null));
+app.use(route.post('/check-token', routes.checktoken, null));
 app.use(route.get('/api/user', routes.user.list));
-app.use(route.post('/api/user', routes.user.create, null));
 app.use(route.get('/api/game', routes.game.list));
 app.use(route.get('/api/game/:id', routes.game.fetch));
+
+app.use(jwt({secret}));
+
+app.use(route.post('/api/user', routes.user.create, null));
+app.use(route.delete('/api/user/:name', routes.user.remove));
 app.use(route.post('/api/game', routes.game.create, null));
 app.use(route.delete('/api/game/:id', routes.game.delete));
-app.use(route.delete('/api/user/:name', routes.user.remove));
+
+
 
 /**
  * Listen on PORT.

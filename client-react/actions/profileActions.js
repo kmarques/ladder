@@ -10,6 +10,11 @@ export const connectAction = (payload) => ({
   payload
 });
 
+export const refreshTokenAction = (payload) => ({
+  type: types.PROFILE_REFRESH_REQUEST,
+  payload
+});
+
 export const logoutAction = () => ({
-    type: types.PROFILE_LOGOUT_REQUEST
+  type: types.PROFILE_LOGOUT_REQUEST
 });
