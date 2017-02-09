@@ -43,7 +43,7 @@ exports.connect = function *() {
 };
 
 exports.checktoken = function *() {
-  let load = this.request.body;
+  const load = this.request.body;
 
   if (!load.token) {
     return this.throw('No token present', 401);
@@ -56,7 +56,7 @@ exports.checktoken = function *() {
   }
 
   tokenData = jsonwebtoken.decode(load.token, process.env.JWT_TOKEN);
-  let user = yield User.findOne({"_id": tokenData.uid});
+  const user = yield User.findOne({"_id": tokenData.uid});
 
   const token = jsonwebtoken.sign(
     {
