@@ -44,7 +44,7 @@ app.use(route.get('/api/user', routes.user.list));
 app.use(route.get('/api/game', routes.game.list));
 app.use(route.get('/api/game/:id', routes.game.fetch));
 
-app.use(jwt({secret}));
+app.use(jwt({secret: secret}));
 
 app.use(route.post('/api/user', routes.user.create, null));
 app.use(route.delete('/api/user/:name', routes.user.remove));
