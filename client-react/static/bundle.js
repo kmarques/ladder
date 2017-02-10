@@ -2050,7 +2050,7 @@ exports.default = function () {
 
   switch (action.type) {
     case types.FETCH_GAMES_SUCCESS:
-      return [].concat((0, _toConsumableArray3.default)(state), (0, _toConsumableArray3.default)(action.games));
+      return [].concat((0, _toConsumableArray3.default)(action.games));
     case types.NEW_GAME_SUCCESS:
       return [action.game].concat((0, _toConsumableArray3.default)(state));
     default:
@@ -2262,7 +2262,7 @@ exports.default = function () {
 
   switch (action.type) {
     case types.FETCH_USERS_SUCCESS:
-      return [].concat((0, _toConsumableArray3.default)(state), (0, _toConsumableArray3.default)(action.users));
+      return [].concat((0, _toConsumableArray3.default)(action.users));
     case types.NEW_USER_SUCCESS:
       return [].concat((0, _toConsumableArray3.default)(state), [action.user]);
     default:
