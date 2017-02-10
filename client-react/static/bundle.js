@@ -2416,28 +2416,32 @@ function newGameSaga(_ref2) {
 
         case 6:
           _context2.next = 8;
-          return (0, _effects.put)({ type: types.UI_MODAL_NEW_GAME_TOGGLE });
+          return (0, _effects.put)({ type: types.FETCH_USERS_REQUEST });
 
         case 8:
           _context2.next = 10;
-          return (0, _effects.put)({ type: types.UI_ADMIN_ACTION_TOGGLE });
+          return (0, _effects.put)({ type: types.UI_MODAL_NEW_GAME_TOGGLE });
 
         case 10:
-          _context2.next = 16;
-          break;
+          _context2.next = 12;
+          return (0, _effects.put)({ type: types.UI_ADMIN_ACTION_TOGGLE });
 
         case 12:
-          _context2.prev = 12;
+          _context2.next = 18;
+          break;
+
+        case 14:
+          _context2.prev = 14;
           _context2.t0 = _context2['catch'](0);
-          _context2.next = 16;
+          _context2.next = 18;
           return (0, _effects.put)({ type: types.NEW_GAME_ERROR, error: _context2.t0 });
 
-        case 16:
+        case 18:
         case 'end':
           return _context2.stop();
       }
     }
-  }, _marked[1], this, [[0, 12]]);
+  }, _marked[1], this, [[0, 14]]);
 }
 
 },{"../Api/game":1,"../constants/actionTypes":22,"babel-runtime/helpers/objectDestructuringEmpty":50,"babel-runtime/regenerator":56,"redux-saga/effects":569}],31:[function(require,module,exports){

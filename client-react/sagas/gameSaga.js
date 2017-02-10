@@ -23,6 +23,7 @@ export function* newGameSaga({payload}) {
   try {
     const game = yield call(newGame, payload);
     yield put({ type: types.NEW_GAME_SUCCESS, game });
+    yield put({ type: types.FETCH_USERS_REQUEST });
     yield put({ type: types.UI_MODAL_NEW_GAME_TOGGLE });
     yield put({ type: types.UI_ADMIN_ACTION_TOGGLE });
   } catch (error) {

@@ -30,3 +30,5 @@ node_modules
 .twgit
 .idea
 .twgit_features_subject
+
+.DS_Store
