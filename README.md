@@ -35,7 +35,7 @@ Or:
 
 ### API Routes
 
-#### GET /api/list
+#### GET /api/user
 
 Get the list of all players in the database. This is a sample response:
 
@@ -58,17 +58,42 @@ Get the list of all players in the database. This is a sample response:
 ]
 ```
 
-#### POST /api/create
+#### POST /api/user
 
 Create a new player in the database. Content-type is application/json with sample body below. All players start with rating at 1500.
 
 ```javascript
 {
-  name: 'BeastLee'
+  name: 'BeastLee',
+  gif: 'http://media.giphy.com/media/I5xVnGJRHZZf2/giphy.gif',
+  rating: 1500,
+  admin: false
 }
 ```
 
-#### POST /api/results
+#### DELETE /api/user/:name
+
+Remove player from database with `name` as the key. The name is case sensitive.
+
+#### GET /api/game
+
+Get the list of all games in the database. This is a sample response:
+
+```javascript
+[
+  {
+    createdAt: 1486748402431,
+    loser: "BeastLee",
+    loserNewElo: 1442,
+    loserOldElo: 1447,
+    winner: "DinnerNugget",
+    winnerNewElo: 1598,
+    winnerOldElo: 1594
+  }
+]
+```
+
+#### POST /api/game
 
 Create a new game result and update Elo ratings accordingly. Content type is application/json with sample body below.
 
@@ -79,9 +104,9 @@ Create a new game result and update Elo ratings accordingly. Content type is app
 }
 ```
 
-#### POST /api/remove/:name
+#### DELETE /api/game/:id
 
-Remove player from database with `name` as the key. The name is case sensitive.
+Remove gmae from database with `id` as the key. The game must be the last played game for both players.
 
 ## License (MIT)
 
